@@ -4,8 +4,8 @@ GOAL:
 The goal of this project is to create a project that scans a locally stored list of band websites and looks for tour dates within the next 3 months in the local area. Any matching entries will be returned in a table format similar to below.
 
 _BAND_    	_DATE_      _LOCATION_
-band1		    date1		    location1
-band2		    date2		    location2
+band1		date1		location1
+band2		date2		location2
 
 INITIAL GOALS
 1) How to scrape websites.
@@ -19,6 +19,4 @@ FUTURE GOALS
 1) Order shows by date closest to current date first then alphabetical. 
 2) Modify ordering through use of a flag for alphabet first. 
 3) Store entries in a local file only if not entered in the file already
-4) If date of show has passed then remove it from the local file. 
-
-LIBRARIES USED
+4) If date of show has passed then remove it from the local file.
