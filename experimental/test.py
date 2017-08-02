@@ -33,6 +33,9 @@ print(date_strings)
 
 print('\n'+'Date Objects')
 dates = [datetime.datetime.strptime(date, "%B %d").date() for date in date_strings]
+for x in dates:
+    x = x.replace(year=2017)
+    print(str(x))
 print(dates)
 
 print('\n'+'*************************************'+'\n' )
@@ -58,4 +61,12 @@ if len(date_strings) == len(venues) == len(cities):
 else:
     print('ERROR! Lists NOT equal')
 
+print('\n'+'*************************************'+'\n' )
+today = datetime.date.today()
+print('Today is: '+ str(today) +'\n')
+print('Difference between dates and today')
+
+for x in dates:
+    diff = x - today
+    print(str(x) +' is ' + str(diff.days) + ' days')
 
