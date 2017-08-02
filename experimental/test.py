@@ -1,5 +1,5 @@
 from lxml import html
-from datetime import datetime
+import datetime
 import requests
 
 
@@ -8,36 +8,44 @@ import requests
 page = requests.get('http://sonataarctica.info/tour')
 tree = html.fromstring(page.content)
 
-date_strings = tree.xpath('//td[@class="date"]//text()')
+date_raw = tree.xpath('//td[@class="date"]//text()')
 venues = tree.xpath('//td[@class="venue"]/a//text()')
 cities = tree.xpath('//td[@class="city"]//text()')
 
 #Convert ishort form months to full month names
-print('CONVERSIONS')
+print('CONVERTING DATES.....')
 months = {'Jan':'January', 'Feb':'February', 'Mar':'March', 'Apr':'April', 'Jun':'June', 'Jul':'July', 'Aug':'August', 'Sep':'September', 'Sept':'September', 'Oct':'October', 'Nov':'November', 'Dec':'December'}
-for x in date_strings:
+date_strings = []
+
+for x in date_raw:
     date = str.split(x)
     if date[0] in months:
-        print(date[0], months[date[0]])
+        #print(date[0], months[date[0]])
         date[0] = months[date[0]]
-        x = date[0] + ' ' + date[1]
+        to_insert = date[0] + ' ' + date[1]
+        #print(to_insert)
+        date_strings.append(to_insert)
+        #print(date_strings)
 
+print('Dates Converted')
+print('\n'+'Strings')
+print(date_strings)
 
+print('\n'+'Date Objects')
+dates = [datetime.datetime.strptime(date, "%B %d").date() for date in date_strings]
+print(dates)
 
-#dates = [datetime.strptime(date, '"%b%d"').date() for date in date_strings]
-
-
-print('*************************************')
-#print('Dates:', date_strings)
+print('\n'+'*************************************'+'\n' )
+#print('Dates:', date_raw)
 #print('Venues:', venues)
 #print('Cities:', cities)
 #print('')
-#print('Date list size', len(date_strings))
+#print('Date list size', len(date_raw))
 #print('Venue list size', len(venues))
 #print('City list size', len(cities))
 
 if len(date_strings) == len(venues) == len(cities):
-    print('lists equal. Creating Visual Table')
+    print('lists equal. Creating Visual Table'+'\n')
 
     titles = ['date', 'venue', 'city']
     data = [titles] + list(zip(date_strings, venues, cities))
@@ -49,3 +57,5 @@ if len(date_strings) == len(venues) == len(cities):
 
 else:
     print('ERROR! Lists NOT equal')
+
+
