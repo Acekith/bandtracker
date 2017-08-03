@@ -33,9 +33,9 @@ print(date_strings)
 
 print('\n'+'Date Objects')
 dates = [datetime.datetime.strptime(date, "%B %d").date() for date in date_strings]
-for x in dates:
-    x = x.replace(year=2017)
-    print(str(x))
+for x,i in enumerate(dates):
+    dates[x] = dates[x].replace(year=2017)
+    print(str(dates[x]))
 print(dates)
 
 print('\n'+'*************************************'+'\n' )
@@ -68,5 +68,12 @@ print('Difference between dates and today')
 
 for x in dates:
     diff = x - today
-    print(str(x) +' is ' + str(diff.days) + ' days')
+    print(str(x) +' is ' + str(diff.days) + ' days from now')
+
+print('\n' + 'Checking locations' + '\n' + '**********************************' + '\n')
+for x in cities:
+    if 'US' in x or 'United States' in x:
+        print(x + ' is in the United States')
+    else:
+        print(x + ' is NOT in the United States')
 
