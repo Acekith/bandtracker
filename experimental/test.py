@@ -2,8 +2,31 @@ from lxml import html
 import datetime
 import requests
 
+#FUNCTIONS
 
-# Testing with Sonata Acrtica website
+def Findlocations():
+    print('\n' + 'Checking locations' + '\n' + '**********************************' + '\n')
+    for x in cities:
+        if 'US' in x or 'United States' in x or 'USA' in x:
+            print('\n' + x + ' IS in the United States' + '\n')
+        else:
+            print(x + ' is NOT in the United States')
+
+def PrintTable():
+    if len(date_strings) == len(venues) == len(cities):
+        print('lists equal. Creating Visual Table'+'\n')
+
+        titles = ['date', 'venue', 'city']
+        data = [titles] + list(zip(date_strings, venues, cities))
+        for i, d in enumerate(data):
+            line = '|'.join(str(x).ljust(25) for x in d)
+            print(line)
+            if i == 0:
+                print('-' * len(line))
+    else:
+        print('ERROR! Lists NOT equal')
+
+# ****************** Testing with Sonata Acrtica website*************
 
 page = requests.get('http://sonataarctica.info/tour')
 tree = html.fromstring(page.content)
@@ -12,7 +35,7 @@ date_raw = tree.xpath('//td[@class="date"]//text()')
 venues = tree.xpath('//td[@class="venue"]/a//text()')
 cities = tree.xpath('//td[@class="city"]//text()')
 
-#Convert ishort form months to full month names
+#Convert short form months to full month names
 print('CONVERTING DATES.....')
 months = {'Jan':'January', 'Feb':'February', 'Mar':'March', 'Apr':'April', 'Jun':'June', 'Jul':'July', 'Aug':'August', 'Sep':'September', 'Sept':'September', 'Oct':'October', 'Nov':'November', 'Dec':'December'}
 date_strings = []
@@ -46,20 +69,7 @@ print('\n'+'*************************************'+'\n' )
 #print('Date list size', len(date_raw))
 #print('Venue list size', len(venues))
 #print('City list size', len(cities))
-
-if len(date_strings) == len(venues) == len(cities):
-    print('lists equal. Creating Visual Table'+'\n')
-
-    titles = ['date', 'venue', 'city']
-    data = [titles] + list(zip(date_strings, venues, cities))
-    for i, d in enumerate(data):
-        line = '|'.join(str(x).ljust(25) for x in d)
-        print(line)
-        if i == 0:
-            print('-' * len(line))
-
-else:
-    print('ERROR! Lists NOT equal')
+PrintTable()
 
 print('\n'+'*************************************'+'\n' )
 today = datetime.date.today()
@@ -69,11 +79,5 @@ print('Difference between dates and today')
 for x in dates:
     diff = x - today
     print(str(x) +' is ' + str(diff.days) + ' days from now')
-
-print('\n' + 'Checking locations' + '\n' + '**********************************' + '\n')
-for x in cities:
-    if 'US' in x or 'United States' in x:
-        print(x + ' is in the United States')
-    else:
-        print(x + ' is NOT in the United States')
+Findlocations()
 
