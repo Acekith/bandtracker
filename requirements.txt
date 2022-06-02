@@ -1,7 +1,7 @@
 bandtracker
 chardet==2.3.0
 colorama==0.3.2
-html5lib==0.999
+html5lib==0.99999999
 requests==2.20.0
 six==1.8.0
 urllib3==1.24.2
